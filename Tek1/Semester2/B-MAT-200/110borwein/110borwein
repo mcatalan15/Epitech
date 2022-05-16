@@ -1,0 +1,100 @@
+#!/usr/bin/env python3
+
+import sys
+from math import *
+import numpy as np
+
+a = 0
+b = 5000
+n = 10000
+h = (b - a) / n
+second_pi = pi / 2
+
+def display_help():
+    print("USAGE:\n" "    \t{} n\n\n" "DESCRIPTION\n" "    \tn    constant defining the integral to be computed".format(
+        sys.argv[0]))
+
+def manage_error():
+    try:
+        arg = int(sys.argv[1])
+    except ValueError:
+        display_help()
+        sys.exit(84)
+    if (arg < 0):
+        display_help()
+        sys.exit(84)
+    return (arg)
+
+def calcul(x, function):
+    if x == 0:
+        return 1
+    p = 1
+    for i in range(function + 1):
+        p = p * (sin(x / (2 * i + 1)) / (x / (2 * i + 1)))
+    return (p)
+
+def my_midpoint(function):
+    resultat = 0
+    j = 0.5
+    for i in np.arange(0.5, 5000.5, 0.5):
+        k = i - 0.5
+        resultat = resultat + calcul((j + k) / 2, function)
+        j += 0.5
+    resultat = resultat * h
+    print("I%d = %.10f" % (function, resultat))
+    if (resultat - second_pi > -0.0000000001 and resultat - second_pi < 0):
+        print("diff = 0.0000000000\n")
+    else:
+        print("diff = %.10f\n" % abs(resultat - second_pi))
+
+def my_trapezoidal(function):
+    resultat = 0
+    for i in range(1, n):
+        resultat += calcul(a + i * h, function)
+    resultat = resultat * 2
+    resultat = resultat + (calcul(a, function) + calcul(b, function))
+    resultat = resultat * (h / 2)
+    print("I%d = %.10f" % (function, resultat))
+    if (resultat - second_pi > -0.0000000001 and resultat - second_pi < 0):
+        print("diff = 0.0000000000\n")
+    else:
+        print("diff = %.10f\n" % abs(resultat - second_pi))
+
+def my_simpson(function):
+    result = 0
+    resultat = 0
+    for i in range(0, n):
+        result += calcul(a + i * h + h / 2, function)
+    result = result * 4
+    for i in range(1, n):
+        resultat += calcul(a + i * h, function)
+    resultat = resultat * 2
+    res = result + resultat
+    res = res + (calcul(a, function) + calcul(b, function))
+    res = res * (h / 6)
+    print("I%d = %.10f" % (function, res))
+    if (res - second_pi > -0.0000000001 and res - second_pi < 0):
+        print("diff = 0.0000000000")
+    else:
+        print("diff = %.10f" % abs(res - second_pi))
+
+def check_for_help():
+    if "--help" in sys.argv or "-h" in sys.argv:
+        display_help()
+        sys.exit(0)
+    if len(sys.argv) != 2:
+        display_help()
+        sys.exit(84)
+
+def main():
+    check_for_help()
+    arg = manage_error()
+    print("Midpoint:")
+    my_midpoint(arg)
+    print("Trapezoidal:")
+    my_trapezoidal(arg)
+    print("Simpson:")
+    my_simpson(arg)
+
+if __name__ == '__main__':
+    main()
