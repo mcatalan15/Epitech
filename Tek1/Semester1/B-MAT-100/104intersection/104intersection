@@ -1,0 +1,39 @@
+#!/usr/bin/python3
+##
+## EPITECH PROJECT, 2022
+## main
+## File description:
+## for intersection
+##
+
+import sys
+
+from usage import usage
+from sphere import sphere
+from cylinder import cylinder
+from cone import cone
+
+def filter(argv):
+    if (sys.argv[1] == '1'):
+        sphere(argv)
+
+    elif (sys.argv[1] == '2'):
+        cylinder(argv)
+
+    elif (sys.argv[1] == '3'):
+        cone(argv)
+
+    else:
+        exit(84)
+
+def intersection(argv):
+    if(len(sys.argv) == 9):
+        filter(argv)
+    
+    elif(sys.argv[1] == '-h' and len(sys.argv) == 2):
+        usage(argv)
+
+    else:
+        exit(84)
+
+intersection(sys.argv)

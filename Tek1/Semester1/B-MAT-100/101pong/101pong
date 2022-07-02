@@ -1,0 +1,45 @@
+#!/usr/bin/python3
+import sys
+import numpy as np
+from Exercise01 import vector
+from Exercise05 import position
+from Exercise04 import magnitude
+from Exercise06 import intersection
+from Exercise07 import arcsin
+
+def call_functions(x0, y0, z0, x1, y1, z1, n):
+    vector01 = vector(x0, y0, z0)
+    vector02 = vector(x1, y1, z1)
+    bat = vector(0, 0, 0)
+    velocityt_0(vector01, vector02)
+    vector_t_pos(vector01, vector02, n)
+    hit(vector01, vector02, n, bat)
+
+def velocityt_0(vector01, vector02):
+    vectort_0 = vector02 - vector01
+    print("The velocity vector of the ball is:\n ", "(", "%.2f" % vectort_0[0],","" ", "%.2f" % vectort_0[1],","" ", "%.2f" % vectort_0[2], ")", sep='')
+
+def vector_t_pos(vector01, vector02, t):
+    result = position(vector01, vector02, t)
+    print("At time t + ", t, ", ball coordinates will be:\n ","(", "%.2f" % result[0],","" ", "%.2f" % result[1],","" ", "%.2f" % result[2], ")", sep='')
+
+def hit(vector01, vector02, t, bat):
+    result = intersection(vector01, vector02, t, bat)
+    if result == "True":
+        vectort_0 = vector02 - vector01
+        vector_mod = magnitude(vectort_0)
+        result = arcsin(vectort_0, vector_mod, bat)
+        print(result, "degrees")
+    else:
+        return 0
+
+if __name__== "__main__":
+    x0 = float(sys.argv[1])
+    y0 = float(sys.argv[2])
+    z0 = float(sys.argv[3])
+    x1 = float(sys.argv[4])
+    y1 = float(sys.argv[5])
+    z1 = float(sys.argv[6])
+    n = int(sys.argv[7])
+    call_functions(x0, y0, z0, x1, y1, z1, n)
+    exit(0)

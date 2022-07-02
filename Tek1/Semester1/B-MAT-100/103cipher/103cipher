@@ -1,0 +1,40 @@
+#!/usr/bin/pyrhon3
+
+import sys
+
+from ascii_translation import char_to_ascii, char_to_ascii_key, ascii_to_char
+from encryption import matrix_dimension, multiply_matrix
+from encryption import empty_key_matrix, empty_sentence_matrix, list_to_matrix_converter
+from print import print_key, print_sentence
+
+def chiper(argv):
+    ascii_translation_sentence = []
+    ascii_translation_key = []
+    ascii_key_dimension = 0
+    key_empty_matrix = []
+    sentence_empty_matrix = []
+    sentence_matrix = []
+
+    if (sys.argv[3] == '0'):
+        ascii_translation_key = char_to_ascii_key(ascii_translation_key)
+        ascii_key_dimension = matrix_dimension(ascii_translation_key)
+        key_empty_matrix = empty_key_matrix(ascii_translation_key, ascii_key_dimension)
+        key_empty_matrix = list_to_matrix_converter(key_empty_matrix, ascii_translation_key)
+        
+        
+        ascii_translation_sentence = char_to_ascii(ascii_translation_sentence)
+        sentence_empty_matrix = empty_sentence_matrix(ascii_translation_sentence, ascii_key_dimension)
+        sentence_matrix = list_to_matrix_converter(sentence_empty_matrix, ascii_translation_sentence)
+
+        sentence_empty_matrix = multiply_matrix(sentence_empty_matrix, key_empty_matrix)
+        print_key(key_empty_matrix, ascii_key_dimension)
+        print_sentence(sentence_empty_matrix)
+        return 0
+
+    elif (sys.argv[3] == '1'):
+        print("Esto es decryption")
+    
+    else:
+        return 84
+
+chiper(sys.argv)
