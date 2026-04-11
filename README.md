@@ -5,7 +5,7 @@
 
 ---
 
-## **📂 Repository Tree** *(with tech tags!)*  
+## **📂 Repository Tree** 
 ```bash
 .
 ├── Semester1/            # "Baby Coder" Phase 👶💻
